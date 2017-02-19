@@ -1,0 +1,112 @@
+
+<html lang="en" ng-app="RestroSearch">
+<head>
+  <meta charset="utf-8">
+  <title>Stay Hungry</title>
+    <link rel='stylesheet' href='public/stylesheets/RestroSearch.css' />
+     <link rel="stylesheet" href="public/stylesheets/bootstrap.min.css">
+     <link rel="stylesheet" href="public/stylesheets/animate.min.css">
+      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+      <link rel="stylesheet" href="public/mapIcon/dist/css/map-icons.css">
+      <link rel="stylesheet" href="public/fontAwsome/font-awesome-4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+	    <script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
+		<script src="public/javascripts/RestroSearch.js"></script>
+	    <script src="public/directives/plotOnMap.js"></script>
+	    <script src="public/mapIcon/dist/js/map-icons.js"></script>
+
+</head>
+<body>
+
+
+	<div ng-controller="SearchRestaurant">
+
+		
+		<div id="search-container" class="row">
+			<div class="restaurnat">
+
+				<form class="input-group" ng-submit="fetchFromZomato()" >
+					<input type="text" class="form-control search-input" gm-places-autocomplete placeholder="Search for Restaurants" ng-model="searchLocation"/>
+					<span class="input-group-btn">
+		      </span>
+
+				</form>
+   		</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+
+		    	<div id="title-container">
+					<div>
+					  <div class="rel-results">
+					    <div class="restaurant ng-scope tile"  ng-repeat="restaurantObject in restaurantResult" track by $index>
+
+					    <p ng-init="drawOnMaps(restaurantObject)"></p>
+					    	<!--<div  my-directive restaurant-data="restaurantObject" class="resultContainer">
+                             
+					    	</div> -->
+					    	 	<div class="rest-name">
+					    	 	   <div class="rest-name-inner">
+                                  <p> {{restaurantObject.restaurant.name}}</p>
+                                  </div>
+                                  <div ng-if="restaurantObject.restaurant.has_online_delivery == '1'"  class="onlineDelivery">
+                                  <i class="fa fa-truck" aria-hidden="true"></i>
+                                  </div>
+                                  <div class="rating-info rrw-aggregate level-6">
+                                        	<p>{{ restaurantObject.restaurant.user_rating.aggregate_rating}}</p><span>/5</span>
+							    	 	</div>
+
+					    	 	</div>
+                              
+                              <div class="restro-img-info">
+					    	 <img  ng-src="{{restaurantObject.restaurant.featured_image}} " />
+                              </div>
+
+					    	 <div class="restaurant-info">
+					    	 	<h2>Cuisine</h2>
+					    	 	<div class="rest-cuisine-info">
+                                  <p> {{restaurantObject.restaurant.cuisines}}</p>
+					    	 	</div>
+					    	 	<div class="other-info">
+                                        <div class="price-info">
+                                        	<label>Price for 2</label>
+                                        	<div class="Price">
+                                        	<span>Rs.</span><p>{{ restaurantObject.restaurant.average_cost_for_two}}</p>
+                                        	<div>
+							    	 	</div>
+					    	    </div>
+					    	 </div>
+
+                                     <div class="restro-btn restro-book-btn"> 	
+							    	 	<div class="book-restro">
+                                        	<a   target="_blank" class="book-link" ng-href="{{restaurantObject.restaurant.book_url}}">
+                                            Book
+                                               </a>
+							    	 	</div>
+							    	 </div>
+
+							</div>
+					    </div>
+					  </div>
+
+                     <div>
+                     	<p ng-init="drawPolygon()"></p>
+                     </div>
+
+					</div>
+
+					<div id="map"></div>
+
+		    	</div>
+
+
+		  </div>
+  	</div>
+
+
+	</div>
+
+</body>
+</html>
